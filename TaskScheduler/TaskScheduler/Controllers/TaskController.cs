@@ -15,10 +15,12 @@ namespace TaskScheduler.Controllers
         DALTasks dal=new DALTasks();
         DALUsers dalUsers=new DALUsers();
         DALProject dalProjects=new DALProject();
-        public virtual ActionResult TaskHome()
+        public virtual ActionResult TaskHome(int? idProject,string additionalSearchField)
         {
             List<TaskModel> model = new List<TaskModel>();
-            foreach (var item in dal.GetAll())
+            var data = idProject.HasValue ? dal.GetAllTaskInProject(idProject.Value, additionalSearchField) : dal.GetAll(); 
+            //when idproject is null  that means I'm not Project Manager
+            foreach (var item in data)
             {
                 model.Add(new TaskModel()
                 {

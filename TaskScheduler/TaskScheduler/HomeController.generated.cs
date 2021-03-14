@@ -109,11 +109,9 @@ namespace TaskScheduler.Controllers
             {
                 public readonly string Home = "Home";
                 public readonly string Login = "Login";
-                public readonly string Tasks = "Tasks";
             }
             public readonly string Home = "~/Views/Home/Home.cshtml";
             public readonly string Login = "~/Views/Home/Login.cshtml";
-            public readonly string Tasks = "~/Views/Home/Tasks.cshtml";
         }
     }
 

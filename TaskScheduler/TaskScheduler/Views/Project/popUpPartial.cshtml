@@ -24,26 +24,27 @@
                         <tr>
                             <td>Number of tasks</td>
                             <td></td>
-                            <td><b>@TempData["numOfTask"]</b></td>
+                            <td><b>@Html.ActionLink(TempData["numOfTask"].ToString(), MVC.Task.TaskHome(Model, "numOfTask"))</b></td>
                         </tr>
                         @foreach (var item in (Dictionary<string, int>)TempData["numOfTaskPerStatus"])
                         {
-                            <tr>
-                                <td><b>"@item.Key"</b> tasks</td>
-                                <td></td>
-                                <td><b>@item.Value</b></td>
-                            </tr>
+                    <tr>
+                        <td><b>"@item.Key"</b> tasks</td>
+                        <td></td>
+                        <td><b>@Html.ActionLink(item.Value.ToString(), MVC.Task.TaskHome(Model, item.Key))</b></td>
+                    </tr>
                         } 
-                        <tr>
-                            <td>Overdue tasks</td>
-                            <td></td>
-                            <td><b>@TempData["numOverdueTask"]</b></td>
-                        </tr>
-                        <tr>
-                            <td>Tasks that expire in two days</td>
-                            <td></td>
-                            <td><b>@TempData["numExpireTask"]</b></td>
-                        </tr>
+                    <tr>
+                        <td>Overdue tasks</td>
+                        <td></td> 
+                        <td><b>@Html.ActionLink(TempData["numOverdueTask"].ToString(), MVC.Task.TaskHome(Model, "numOverdueTask"))</b></td>
+                    </tr>
+                    <tr>
+                        <td>Tasks that expire in two days</td>
+                        <td></td> 
+                        <td><b>@Html.ActionLink(TempData["numExpireTask"].ToString(), MVC.Task.TaskHome(Model, "numExpireTask"))</b></td>
+
+                    </tr>
                         <tr>
                             <td>Progress of tasks</td>
                             <td></td>

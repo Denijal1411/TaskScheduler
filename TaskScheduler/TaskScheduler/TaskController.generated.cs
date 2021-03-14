@@ -61,6 +61,12 @@ namespace TaskScheduler.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult TaskHome()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TaskHome);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult DeleteTask()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteTask);
@@ -103,6 +109,15 @@ namespace TaskScheduler.Controllers
         }
 
 
+        static readonly ActionParamsClass_TaskHome s_params_TaskHome = new ActionParamsClass_TaskHome();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TaskHome TaskHomeParams { get { return s_params_TaskHome; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TaskHome
+        {
+            public readonly string idProject = "idProject";
+            public readonly string additionalSearchField = "additionalSearchField";
+        }
         static readonly ActionParamsClass_AddTask s_params_AddTask = new ActionParamsClass_AddTask();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_AddTask AddTaskParams { get { return s_params_AddTask; } }
@@ -154,13 +169,15 @@ namespace TaskScheduler.Controllers
         public T4MVC_TaskController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void TaskHomeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void TaskHomeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? idProject, string additionalSearchField);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult TaskHome()
+        public override System.Web.Mvc.ActionResult TaskHome(int? idProject, string additionalSearchField)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TaskHome);
-            TaskHomeOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "idProject", idProject);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "additionalSearchField", additionalSearchField);
+            TaskHomeOverride(callInfo, idProject, additionalSearchField);
             return callInfo;
         }
 

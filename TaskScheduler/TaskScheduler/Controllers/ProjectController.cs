@@ -100,10 +100,10 @@ namespace TaskScheduler.Controllers
             {
                 TempData["ProjectName"] = dal.Get(new Project() { ProjectCode = id }).ProjectName;
                 TempData["AvgProgress"] = getProgresStatistics(id).ToString("F");
-                TempData["numOfTask"] = dalTask.GetAll().Where(x => x.IDProject == id).Count();
-                TempData["numOfTaskPerStatus"] = getTasksPerStatus(id);
-                TempData["numOverdueTask"] = dalTask.GetAll().Where(x => x.IDProject == id && x.Deadline < DateTime.Now).Count();
-                TempData["numExpireTask"] = dalTask.GetAll().Where(x => x.IDProject == id && x.Deadline > DateTime.Now && x.Deadline < DateTime.Now.AddDays(2)).Count();
+                TempData["numOfTaskPerStatus"] = getTasksPerStatus(id); // must use this method because I want dictionary type
+                TempData["numOfTask"] = dalTask.GetAllTaskInProject(id, "numOfTask").Count();
+                TempData["numOverdueTask"] = dalTask.GetAllTaskInProject(id, "numOverdueTask").Count();
+                TempData["numExpireTask"] = dalTask.GetAllTaskInProject(id, "numExpireTask").Count();
                 return PartialView(id);
             }
             catch (Exception)
@@ -120,21 +120,21 @@ namespace TaskScheduler.Controllers
             {
                 var allTask = dalTask.GetAll().Where(x => x.IDProject == id);
                 var avg = allTask.Sum(x => x.Progress) * 1.0 / allTask.Count();
-                return allTask.Count()==0 ? (double)0 : (double)avg;
+                return allTask.Count()==0 ? 0.0 : (double)avg;
             }
             catch (Exception)
             {
 
-                return (double)0;
+                return 0.0;
             }
            
         }
         private Dictionary<string,int> getTasksPerStatus(int id)
         {
             Dictionary<string, int> data = new Dictionary<string, int>();
-            var newStatus=dalTask.GetAll().Where(x => x.IDProject == id).Where(x => x.Status.ToLower() == "new").Count();
-            var progressStatus=dalTask.GetAll().Where(x => x.IDProject == id).Where(x => x.Status.ToLower() == "in progress").Count();
-            var finishedStatus=dalTask.GetAll().Where(x => x.IDProject == id).Where(x => x.Status.ToLower() == "finished").Count();
+            var newStatus=dalTask.GetAll().Where(x => x.IDProject == id && x.Status.ToLower() == "new").Count();
+            var progressStatus=dalTask.GetAll().Where(x => x.IDProject == id && x.Status.ToLower() == "in progress").Count();
+            var finishedStatus=dalTask.GetAll().Where(x => x.IDProject == id && x.Status.ToLower() == "finished").Count();
 
             data.Add("New", newStatus);
             data.Add("In Progress", progressStatus);
